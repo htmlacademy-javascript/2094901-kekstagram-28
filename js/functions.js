@@ -7,7 +7,7 @@ isCheckLength ('Привет', 10);
 // Проверка является ли строка палиндромом.
 
 function getCheckPalindrom(strCheck) {
-  strCheck = strCheck.toUpperCase();
+  strCheck = strCheck.toUpperCase(),
   strCheck = strCheck.replaceAll(' ', '');
   const x = strCheck.length - 1;
   for(let i = 0; i < x / 2; i++) {
@@ -21,6 +21,13 @@ function getCheckPalindrom(strCheck) {
 }
 
 getCheckPalindrom('Лёша на полке клопа нашёл');
+console.log(getCheckPalindrom('шалаш4fffbf'));
+
+function getCheckPalindrom1(str) {
+  return str === str.toLowerCase().replaceAll(' ', '').split('').reverse().join('');
+}
+
+console.log('шалаш', getCheckPalindrom1('шалашаавм'));
 
 // Функция возвращающая целое положительное число.
 const getNumber = (string) => {
@@ -44,11 +51,11 @@ const getValue = (string, minLength, value) => {
   let result = string;
   while (result.length < minLength) {
     const newResultLength = result.length + value.length;
-    const actualPad = newResultLength <= minLength ? value :
-      value.slice(0, minLength - newResultLength);
+    const actualPad = newResultLength <= minLength ? value : value.slice(0, minLength - newResultLength);
     result = actualPad + result;
   }
   return result;
 };
 
-getValue('1', 2, '0');
+getValue('qwe', 10, '01!');
+console.log(getValue('qwe', 10, '01!'));
