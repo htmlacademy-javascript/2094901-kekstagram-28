@@ -1,7 +1,7 @@
 // Проверка длины строки.
 
 const isCheckLength = (strChecked, strLength) => strChecked.length <= strLength;
-isCheckLength ('Привет', 10);
+isCheckLength('Привет', 10);
 
 
 // Проверка является ли строка палиндромом.
@@ -9,10 +9,10 @@ isCheckLength ('Привет', 10);
 function getCheckPalindrom(strCheck) {
   strCheck = strCheck.toUpperCase().replaceAll(' ', '');
   const x = strCheck.length - 1;
-  for(let i = 0; i < x / 2; i++) {
+  for (let i = 0; i < x / 2; i++) {
     const frwCheck = strCheck[i];
     const bkwCheck = strCheck[x - i];
-    if(frwCheck !== bkwCheck) {
+    if (frwCheck !== bkwCheck) {
       return false;
     }
   }
@@ -23,11 +23,11 @@ getCheckPalindrom('Лёша на полке клопа нашёл');
 
 // Функция возвращающая целое положительное число.
 const getNumber = (string) => {
-  if(typeof string === 'number') {
+  if (typeof string === 'number') {
     return string;
   }
   let result = '';
-  for(let i = 0; i < string.length; i++) {
+  for (let i = 0; i < string.length; i++) {
     if (!Number.isNaN(parseInt(string.at(i), 10))) {
       result += string.at(i);
     }
