@@ -47,7 +47,8 @@ const NAMES = [
   'Юрий',
 ];
 
-export {PHOTOS_NUMBER,
+export {
+  PHOTOS_NUMBER,
   LIKES_NUMBER_MIN,
   LIKES_NUMBER_MAX,
   MIN_COMMENTS,

@@ -1,6 +1,9 @@
-import { getRandomInteger,
-  createRandomIdFromRangeGenerator } from './util.js';
-import {PHOTOS_NUMBER,
+import {
+  getRandomInteger,
+  createRandomIdFromRangeGenerator
+} from './util.js';
+import {
+  PHOTOS_NUMBER,
   LIKES_NUMBER_MIN,
   LIKES_NUMBER_MAX,
   MIN_COMMENTS,
@@ -48,6 +51,4 @@ const getPhotos = (n) => {
   return photos;
 };
 
-getPhotos(PHOTOS_NUMBER);
-
-export {getPhotos};
+export { getPhotos };
