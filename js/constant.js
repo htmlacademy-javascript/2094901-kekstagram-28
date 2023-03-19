@@ -6,6 +6,7 @@ const MAX_COMMENTS = 20;
 const COMMENTS_NUMBER = 20000;
 const AVATAR_NUMBER_MIN = 1;
 const AVATAR_NUMBER_MAX = 6;
+const COMMENTS_STEP = 5;
 const DESCRIPTIONS = [
   'Хорошо, конечно, попасть бы в сказку с хорошим концом, да сказки-то эти, может, не самые хорошие.',
   'Никто не может избежать страданий. Ни Бог, ни ты. Ни твои родители, ни я.',
@@ -59,4 +60,5 @@ export {
   DESCRIPTIONS,
   MESSAGES,
   NAMES,
+  COMMENTS_STEP
 };
