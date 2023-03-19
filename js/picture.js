@@ -1,7 +1,6 @@
 import { renderModal } from './modal.js';
-// Находим место для размещения фотографий.
+
 const picturesContainer = document.querySelector('.pictures');
-// Находим шаблон и его содержимое.
 const pictureTemplate = document.querySelector('#picture').content
   .querySelector('.picture');
 
@@ -12,15 +11,19 @@ const renderCards = (photos) => {
     cloneImage.querySelector('.picture__img').src = photo.url;
     cloneImage.querySelector('.picture__comments').textContent = photo.comments.length;
     cloneImage.querySelector('.picture__likes').textContent = photo.likes;
+    cloneImage.dataset.thumbnailId = photo.id;
     fragment.append(cloneImage);
-    cloneImage.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      renderModal(photo);
-
-    });
   }
   );
   picturesContainer.append(fragment);
+  picturesContainer.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('picture__img')) {
+      evt.preventDefault();
+      const index = photos.findIndex((element) => element.id === 1 * evt.target.closest('a').dataset.thumbnailId);
+      renderModal(photos[index]);
+    }
+
+  });
 };
 
 export { renderCards };
