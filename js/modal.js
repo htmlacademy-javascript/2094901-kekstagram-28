@@ -15,17 +15,26 @@ const commentsList = [];
 let commentsCountShown = 0;
 let commentsTotal = 0;
 
-buttonCancel.addEventListener('click', () => {
-  modal.classList.add('hidden');
-  body.classList.remove('modal-open');
-});
-
-document.addEventListener('keydown', (evt) => {
+const onEscHandler = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     modal.classList.add('hidden');
     body.classList.remove('modal-open');
   }
+};
+
+const hideModal = () => {
+  modal.classList.add('hidden');
+  body.classList.remove('modal-open');
+};
+
+const closeModal = () => {
+  hideModal();
+  document.removeEventListener('keydown', onEscHandler);
+};
+
+buttonCancel.addEventListener('click', () => {
+  closeModal();
 });
 
 const showModal = () => {
@@ -88,6 +97,7 @@ const renderModal = (photo) => {
   commentsList.push(...photo.comments.slice());
   modalCommentsList.innerHTML = '';
   renderComments();
+  document.addEventListener('keydown', onEscHandler);
 };
 
 export {renderModal};
