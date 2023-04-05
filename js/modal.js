@@ -15,7 +15,7 @@ const commentsList = [];
 let commentsCountShown = 0;
 let commentsTotal = 0;
 
-const onEscHandler = (evt) => {
+const onEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     modal.classList.add('hidden');
@@ -30,7 +30,7 @@ const hideModal = () => {
 
 const closeModal = () => {
   hideModal();
-  document.removeEventListener('keydown', onEscHandler);
+  document.removeEventListener('keydown', onEsc);
 };
 
 buttonCancel.addEventListener('click', () => {
@@ -97,7 +97,7 @@ const renderModal = (photo) => {
   commentsList.push(...photo.comments.slice());
   modalCommentsList.innerHTML = '';
   renderComments();
-  document.addEventListener('keydown', onEscHandler);
+  document.addEventListener('keydown', onEsc);
 };
 
 export {renderModal};
