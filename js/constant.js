@@ -52,6 +52,9 @@ const MAX_DESCRIPTON_LENGTHS = 140;
 const HASHTAG_MAX_QUANTITY = 5;
 const SCALE_CONTROL_STEP = 25;
 const SCALE_IMAGE_STEP = 0.25;
+const GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
+const POST_DATA = 'https://28.javascript.pages.academy/kekstagram';
+const ALERT_SHOW_TIME = 5000;
 
 export {
   PHOTOS_NUMBER,
@@ -70,4 +73,7 @@ export {
   HASHTAG_MAX_QUANTITY,
   SCALE_CONTROL_STEP,
   SCALE_IMAGE_STEP,
+  GET_DATA,
+  POST_DATA,
+  ALERT_SHOW_TIME,
 };

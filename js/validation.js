@@ -16,6 +16,9 @@ const pristine = new Pristine(uploadForm, {
 const validateDescription = (value) => isCheckLength(value, MAX_DESCRIPTON_LENGTHS);
 
 const validateHashtags = (value) => {
+  if (textHashtags.value === '') {
+    return true;
+  }
   const hashtags = /^#[a-zа-яё0-9]{1,19}$/i;
   const arrayTag = value.replace(/\s+/g, ' ').trim().split(' ');
   const validateTag = arrayTag.every((tag) => hashtags.test(tag));
