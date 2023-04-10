@@ -10,6 +10,7 @@ const getData = () =>
         throw new Error('Не удалось получить данные');
       }
       return response.json();
+
     })
     .catch((err) => {
       showAlert(err.message);
