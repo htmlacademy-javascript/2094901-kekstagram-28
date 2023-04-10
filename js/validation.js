@@ -41,24 +41,32 @@ pristine.addValidator(
   textDescription,
   validateDescription,
   `Описание не должно превышать ${MAX_DESCRIPTON_LENGTHS} символов`,
+  1,
+  true
 );
 
 pristine.addValidator(
   textHashtags,
   validateHashtags,
   'Неправильный Хэштэг',
+  1,
+  true
 );
 
 pristine.addValidator(
   textHashtags,
   checkSimilarHashtags,
   'Хэштэги не могут повторяться',
+  1,
+  true
 );
 
 pristine.addValidator(
   textHashtags,
   checkQuantityHashtags,
   `Не более ${HASHTAG_MAX_QUANTITY} Хэштэгов`,
+  1,
+  true
 );
 
 const validateForm = () => pristine.validate();

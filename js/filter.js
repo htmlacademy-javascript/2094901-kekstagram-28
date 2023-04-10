@@ -1,33 +1,38 @@
+import { renderCards } from './picture.js';
+import { RANDOM_NUMBER_CARD } from './constant.js';
+import { debounce } from './util.js';
+
 const filterContainer = document.querySelector('.img-filters');
-const defaultButtton = document.querySelector('#filter-default');
-const randomButton = document.querySelector('#filter-random');
-const discussedButton = document.querySelector('#filter-discussed');
+const photos = [];
 
-const showFilterContainer = () => {
+const setActiveButton = (evt) => {
+  document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+  evt.target.classList.add('img-filters__button--active');
+};
+
+const filterData = (filter) => {
+  switch (filter) {
+    case 'filter-default':
+      return photos;
+    case 'filter-random':
+      return [...photos].sort(() => Math.random() - 0.5).slice(0, RANDOM_NUMBER_CARD);
+    case 'filter-discussed':
+      return [...photos].sort((a, b) => b.comments.length - a.comments.length);
+  }
+};
+
+filterContainer.addEventListener('click', debounce((evt) => {
+  if (evt.target.classList.contains('img-filters__button')) {
+    const id = evt.target.id;
+    renderCards(filterData(id));
+    setActiveButton(evt);
+  }
+}));
+
+const showFilterContainer = (data) => {
+  photos.push(...data.slice());
   filterContainer.classList.remove('img-filters--inactive');
+  renderCards(data);
 };
 
-const getDefaultPhoto = () => {
-  defaultButtton.classList.add('img-filters__button--active');
-  randomButton.classList.remove('img-filters__button--active');
-  discussedButton.classList.remove('img-filters__button--active');
-};
-
-const getRandomPhoto = () => {
-  randomButton.classList.add('img-filters__button--active');
-  defaultButtton.classList.remove('img-filters__button--active');
-  discussedButton.classList.remove('img-filters__button--active');
-};
-
-const getDiscussedPhoto = () => {
-  discussedButton.classList.add('img-filters__button--active');
-  defaultButtton.classList.remove('img-filters__button--active');
-  randomButton.classList.remove('img-filters__button--active');
-};
-
-
-defaultButtton.addEventListener('click', getDefaultPhoto);
-randomButton.addEventListener('click', getRandomPhoto);
-discussedButton.addEventListener('click', getDiscussedPhoto);
-
-export {showFilterContainer};
+export { showFilterContainer };

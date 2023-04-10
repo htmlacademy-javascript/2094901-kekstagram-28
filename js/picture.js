@@ -13,8 +13,10 @@ const renderCards = (photos) => {
     cloneImage.querySelector('.picture__likes').textContent = photo.likes;
     cloneImage.dataset.thumbnailId = photo.id;
     fragment.append(cloneImage);
-  }
-  );
+  });
+  document.querySelectorAll('.picture').forEach((item) => {
+    item.remove();
+  });
   picturesContainer.append(fragment);
   picturesContainer.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('picture__img')) {
