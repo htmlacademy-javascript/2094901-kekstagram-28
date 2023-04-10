@@ -1,28 +1,5 @@
 import { ALERT_SHOW_TIME } from './constant.js';
 
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= max - min + 1) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const isCheckLength = (strChecked, strLength) => strChecked.length <= strLength;
@@ -48,9 +25,19 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 export {
-  getRandomInteger,
-  createRandomIdFromRangeGenerator,
   isEscapeKey,
   isCheckLength,
-  showAlert };
+  showAlert,
+  debounce
+};
+
+

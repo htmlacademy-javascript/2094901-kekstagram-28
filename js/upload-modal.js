@@ -1,7 +1,10 @@
 import { isEscapeKey } from './util.js';
 import { validateForm } from './validation.js';
 import { resetSlider } from './slider.js';
+import { resetScale } from './scale.js';
 import { postData } from './api.js';
+import { onSuccess, onFail } from './popups.js';
+import { submitButtonText } from './constant.js';
 
 const uploadModal = document.querySelector('.img-upload__overlay');
 const uploadButton = document.querySelector('#upload-file');
@@ -9,6 +12,7 @@ const uploadCancel = uploadModal.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectsPreview = document.querySelectorAll('.effects__preview');
+const submitButton = document.querySelector('.img-upload__submit');
 const body = document.body;
 
 const hideModal = () => {
@@ -16,13 +20,40 @@ const hideModal = () => {
   uploadForm.reset();
   body.classList.remove('modal-open');
   uploadButton.value = '';
+  document.removeEventListener('keydown', onEscCloseModal);
+};
+
+const disableSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = submitButtonText.SENDING;
+};
+
+const activateSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = submitButtonText.IDLE;
 };
 
 const onSubmitForm = (evt) => {
   evt.preventDefault();
   if (validateForm()) {
-    postData(new FormData(uploadForm)
-    );
+    disableSubmitButton();
+    postData(new FormData(uploadForm))
+      .then((response) => {
+        if (response.ok) {
+          hideModal();
+          onSuccess();
+        } else {
+          onFail();
+          document.removeEventListener('keydown', onEscCloseModal);
+        }
+      })
+      .catch(() => {
+        onFail();
+        document.removeEventListener('keydown', onEscCloseModal);
+      })
+      .finally(() => {
+        activateSubmitButton();
+      });
   }
 };
 
@@ -40,8 +71,10 @@ const showUploadModal = () => {
   uploadButton.addEventListener('change', () => {
     uploadModal.classList.remove('hidden');
     body.classList.add('modal-open');
+    document.addEventListener('keydown', onEscCloseModal);
     changePreview();
     resetSlider();
+    resetScale();
   });
 };
 
@@ -49,16 +82,14 @@ uploadCancel.addEventListener('click', () => {
   hideModal();
 });
 
-const onEscCloseModal = (evt) => {
+function onEscCloseModal(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     if (!(evt.target.classList.contains('text__hashtags') || evt.target.classList.contains('text__description'))) {
       hideModal();
     }
   }
-};
-
-document.addEventListener('keydown', onEscCloseModal);
+}
 
 const uploadImage = () => {
   showUploadModal();

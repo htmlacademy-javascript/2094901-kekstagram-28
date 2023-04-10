@@ -90,7 +90,7 @@ buttonLoader.addEventListener('click', (evt) => {
 
 const renderModal = (photo) => {
   showModal();
-  commentsTotal = photo.comments.length;
+  commentsTotal = photo.comments?.length ? photo.comments?.length : 0;
   commentsCountShown = 0;
   renderModalImage(photo);
   renderModalLikes(photo);
