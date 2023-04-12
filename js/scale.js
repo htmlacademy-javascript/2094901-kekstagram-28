@@ -1,12 +1,15 @@
+import {
+  STEP_SCALE,
+  MIN_SCALE,
+  MAX_SCALE,
+} from './constant.js';
+
+let scaleValue = MAX_SCALE;
+
 const scaleControl = document.querySelector('.scale__control--value');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const imagePreview = document.querySelector('.img-upload__preview');
-
-let scaleValue = 100;
-const STEP_SCALE = 25;
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const renderScaleValue = () => {
   scaleControl.value = `${scaleValue}%`;
@@ -29,7 +32,7 @@ scaleControlBigger.addEventListener('click', () => {
 });
 
 const resetScale = () => {
-  scaleValue = 100;
+  scaleValue = MAX_SCALE;
   renderScaleValue();
   renderScaleImage();
 };

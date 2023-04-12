@@ -4,10 +4,27 @@ import { onEscCloseModal } from './upload-modal.js';
 const succesTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-const onCloseButtonClick = (evt) => {
-  if (evt.target.closest('section').classList.contains('success') || evt.target.closest('section').classList.contains('error')) {
+const onButtonClosePopup = (evt) => {
+  if (evt.target.closest('section').classList.contains('success')) {
     evt.target.closest('section').remove();
-    document.addEventListener('keydown', onEscCloseModal);
+    removeEventListener();
+  } else if (evt.target.closest('section').classList.contains('error')) {
+    evt.target.closest('section').remove();
+    removeEventListener();
+    document.body.addEventListener('keydown', onEscCloseModal);
+  }
+};
+
+const onClickClosePopup = (evt) => {
+  if (!evt.target.closest('.success__inner')) {
+    if (document.querySelector('.success')) {
+      document.querySelector('.success').remove();
+      removeEventListener();
+    } else if (!evt.target.closest('.error__inner')) {
+      document.querySelector('.error').remove();
+      removeEventListener();
+      document.body.addEventListener('keydown', onEscCloseModal);
+    }
   }
 };
 
@@ -16,39 +33,36 @@ const onEscClosePopup = (evt) => {
     evt.preventDefault();
     if (document.querySelector('.success')) {
       document.querySelector('.success').remove();
+      removeEventListener();
     } else {
-      document.addEventListener('keydown', onEscCloseModal);
       document.querySelector('.error').remove();
+      removeEventListener();
+      document.body.addEventListener('keydown', onEscCloseModal);
     }
   }
 };
 
-const onClickClosePopup = (evt) => {
-  if (evt.target.closest('body')) {
-    if (document.querySelector('.success')) {
-      document.querySelector('.success').remove();
-    } else {
-      document.addEventListener('keydown', onEscCloseModal);
-      document.querySelector('.error').remove();
-    }
-  }
-};
+function removeEventListener() {
+  document.body.removeEventListener('click', onClickClosePopup,);
+  document.body.removeEventListener('keydown', onEscClosePopup,);
+  document.body.removeEventListener('keydown', onEscCloseModal,);
+}
 
 const onSuccess = () => {
   const successPopup = succesTemplate.cloneNode(true);
+  successPopup.querySelector('.success__button').addEventListener('click', onButtonClosePopup);
   document.removeEventListener('keydown', onEscCloseModal);
-  successPopup.querySelector('.success__button').addEventListener('click', onCloseButtonClick);
-  document.addEventListener('keydown', onEscClosePopup, {once: true});
-  document.addEventListener('click', onClickClosePopup,{once: true});
+  document.body.addEventListener('keydown', onEscClosePopup,);
+  document.body.addEventListener('click', onClickClosePopup,);
   document.body.append(successPopup);
 };
 
 const onFail = () => {
   const errorPopup = errorTemplate.cloneNode(true);
-  errorPopup.querySelector('.error__button').addEventListener('click', onCloseButtonClick);
-  document.removeEventListener('keydown', onEscCloseModal);
-  document.addEventListener('keydown', onEscClosePopup, {once: true});
-  document.addEventListener('click', onClickClosePopup, {once: true});
+  errorPopup.querySelector('.error__button').addEventListener('click', onButtonClosePopup);
+  document.body.removeEventListener('keydown', onEscCloseModal);
+  document.body.addEventListener('keydown', onEscClosePopup,);
+  document.body.addEventListener('click', onClickClosePopup,);
   document.body.append(errorPopup);
 };
 

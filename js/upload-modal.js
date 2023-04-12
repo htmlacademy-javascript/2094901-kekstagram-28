@@ -20,7 +20,7 @@ const hideModal = () => {
   uploadForm.reset();
   body.classList.remove('modal-open');
   uploadButton.value = '';
-  document.removeEventListener('keydown', onEscCloseModal);
+  document.body.removeEventListener('keydown', onEscCloseModal);
 };
 
 const disableSubmitButton = () => {
@@ -71,7 +71,7 @@ const showUploadModal = () => {
   uploadButton.addEventListener('change', () => {
     uploadModal.classList.remove('hidden');
     body.classList.add('modal-open');
-    document.addEventListener('keydown', onEscCloseModal);
+    document.body.addEventListener('keydown', onEscCloseModal);
     changePreview();
     resetSlider();
     resetScale();
