@@ -15,27 +15,27 @@ const commentsList = [];
 let commentsCountShown = 0;
 let commentsTotal = 0;
 
-const onEsc = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    modal.classList.add('hidden');
-    body.classList.remove('modal-open');
-  }
-};
-
 const hideModal = () => {
   modal.classList.add('hidden');
   body.classList.remove('modal-open');
+  removeEventListener();
+};
+
+const onEsc = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    hideModal();
+  }
 };
 
 const closeModal = () => {
   hideModal();
-  document.removeEventListener('keydown', onEsc);
 };
 
-buttonCancel.addEventListener('click', () => {
-  closeModal();
-});
+function removeEventListener() {
+  document.body.removeEventListener('keydown', onEsc);
+  buttonCancel.removeEventListener('click',closeModal);
+}
 
 const showModal = () => {
   modal.classList.remove('hidden');
@@ -52,7 +52,7 @@ const renderComment = (comment) => {
 };
 
 const renderModalCommentsCount = () => {
-  modalCommentsCount.innerHTML = `${commentsCountShown} из <span class="comments-count">${commentsTotal}</span> комментариев`;
+  modalCommentsCount.textContent = `${commentsCountShown} из ${commentsTotal} комментариев`;
 };
 
 const renderLoadButton = () => {
@@ -65,12 +65,10 @@ const renderLoadButton = () => {
 
 const renderComments = () => {
   const fragment = document.createDocumentFragment();
-
   commentsList.splice(0, COMMENTS_STEP).forEach((comment) => {
     fragment.append(renderComment(comment));
   });
   modalCommentsList.append(fragment);
-
   renderModalCommentsCount();
   renderLoadButton();
 };
@@ -97,7 +95,8 @@ const renderModal = (photo) => {
   commentsList.push(...photo.comments.slice());
   modalCommentsList.innerHTML = '';
   renderComments();
-  document.addEventListener('keydown', onEsc);
+  buttonCancel.addEventListener('click',closeModal);
+  document.body.addEventListener('keydown', onEsc);
 };
 
 export {renderModal};

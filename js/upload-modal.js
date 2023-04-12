@@ -71,7 +71,7 @@ const showUploadModal = () => {
   uploadButton.addEventListener('change', () => {
     uploadModal.classList.remove('hidden');
     body.classList.add('modal-open');
-    document.addEventListener('keydown', onEscCloseModal);
+    document.body.addEventListener('keydown', onEscCloseModal);
     changePreview();
     resetSlider();
     resetScale();
