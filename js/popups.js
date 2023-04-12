@@ -5,10 +5,13 @@ const succesTemplate = document.querySelector('#success').content.querySelector(
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const onButtonClosePopup = (evt) => {
-  if (evt.target.closest('section').classList.contains('success') || evt.target.closest('section').classList.contains('error')) {
+  if (evt.target.closest('section').classList.contains('success')) {
     evt.target.closest('section').remove();
-    document.addEventListener('keydown', onEscCloseModal);
     removeEventListener();
+  } else if (evt.target.closest('section').classList.contains('error')) {
+    evt.target.closest('section').remove();
+    removeEventListener();
+    document.body.addEventListener('keydown', onEscCloseModal);
   }
 };
 
@@ -18,9 +21,9 @@ const onClickClosePopup = (evt) => {
       document.querySelector('.success').remove();
       removeEventListener();
     } else if (!evt.target.closest('.error__inner')) {
-      document.addEventListener('keydown', onEscCloseModal);
       document.querySelector('.error').remove();
       removeEventListener();
+      document.body.addEventListener('keydown', onEscCloseModal);
     }
   }
 };
@@ -32,9 +35,9 @@ const onEscClosePopup = (evt) => {
       document.querySelector('.success').remove();
       removeEventListener();
     } else {
-      document.addEventListener('keydown', onEscClosePopup);
       document.querySelector('.error').remove();
       removeEventListener();
+      document.body.addEventListener('keydown', onEscCloseModal);
     }
   }
 };
@@ -42,6 +45,7 @@ const onEscClosePopup = (evt) => {
 function removeEventListener() {
   document.body.removeEventListener('click', onClickClosePopup,);
   document.body.removeEventListener('keydown', onEscClosePopup,);
+  document.body.removeEventListener('keydown', onEscCloseModal,);
 }
 
 const onSuccess = () => {

@@ -20,7 +20,7 @@ const hideModal = () => {
   uploadForm.reset();
   body.classList.remove('modal-open');
   uploadButton.value = '';
-  document.removeEventListener('keydown', onEscCloseModal);
+  document.body.removeEventListener('keydown', onEscCloseModal);
 };
 
 const disableSubmitButton = () => {
