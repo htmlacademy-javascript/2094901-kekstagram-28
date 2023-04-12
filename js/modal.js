@@ -92,6 +92,7 @@ const renderModal = (photo) => {
   commentsCountShown = 0;
   renderModalImage(photo);
   renderModalLikes(photo);
+  commentsList.length = 0;
   commentsList.push(...photo.comments.slice());
   modalCommentsList.innerHTML = '';
   renderComments();
